@@ -7,7 +7,7 @@ import os
 def main():
 	cmdlist = {
 		'help': (show_usage, False),
-		'status': (show_status, True),
+		'stat': (show_status, True),
 		'on': (turn_on, True),
 		'off': (turn_off, True)
 	}
@@ -40,7 +40,7 @@ def turn_off(arg):
 	_apply_workaround(arg, False)
 
 def _apply_workaround(arg, turnon):
-	wks = parse_workaround_arg(arg)
+	wks = parse_workaround_arg(arg, default_all=True)
 	if not wks:
 		print("Please select workaround to apply!")
 		return
