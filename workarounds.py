@@ -17,34 +17,36 @@ class ProcessPauseWorkaround:
 		self._pfc = _ProcFinderCached.singleton()
 
 	def pause_resume_proc(self, pause):
-		tpl = self._pfc.find_proc(self.procname)
-		if tpl is None:
-			print(f"{self.procname} is not running")
-			return False
-		pid, _, _ = tpl
-		sig = signal.SIGSTOP if pause else signal.SIGCONT
-		try:
-			os.kill(pid, sig)
-		except Exception as ex:
-			print(f"Error signaling PID {pid}: {ex}")
-			return False
+		for procname in self.procnames:
+			tpl = self._pfc.find_proc(procname)
+			if tpl is None:
+				print(f"{procname} is not running")
+				return False
+			pid, _, _ = tpl
+			sig = signal.SIGSTOP if pause else signal.SIGCONT
+			try:
+				os.kill(pid, sig)
+			except Exception as ex:
+				print(f"Error signaling PID {pid}: {ex}")
+				return False
 		return True
 
 	def print_status(self):
-		tpl = self._pfc.find_proc(self.procname)
-		pid = "unknown"
-		if tpl is None:
-			status = "UNKNOWN"
-		elif tpl:
-			pid, _, status = tpl
-			status = MachProcStatus(status)
-			if status == MachProcStatus.SSTOP:
-				status = "STOPPED"
-			elif status == MachProcStatus.SRUN:
-				status = "RUNNING"
-			else:
-				status = status.name
-		print(f"{self.procname} (PID {pid}) is {status}")
+		for procname in self.procnames:
+			tpl = self._pfc.find_proc(procname)
+			pid = "unknown"
+			if tpl is None:
+				status = "UNKNOWN"
+			elif tpl:
+				pid, _, status = tpl
+				status = MachProcStatus(status)
+				if status == MachProcStatus.SSTOP:
+					status = "STOPPED"
+				elif status == MachProcStatus.SRUN:
+					status = "RUNNING"
+				else:
+					status = status.name
+			print(f"{procname} (PID {pid}) is {status}")
 
 	def turn_on(self):
 		self.pause_resume_proc(True)
@@ -58,7 +60,7 @@ class AirportWorkaround(ProcessPauseWorkaround):
 
 	def __init__(self):
 		super().__init__()
-		self.procname = "airportd"
+		self.procnames = ["airportd"]
 
 class AwdlWorkaround(ProcessPauseWorkaround):
 	desc = "Suspend AirPlay and disables AWDL. This workaround have to be turned off to activate " \
@@ -66,7 +68,7 @@ class AwdlWorkaround(ProcessPauseWorkaround):
 
 	def __init__(self):
 		super().__init__()
-		self.procname = "AirPlayXPCHelper"
+		self.procnames = ["AirPlayXPCHelper", "AirPlayUIAgent"]
 
 	def turn_on(self):
 		super().turn_on()
