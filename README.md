@@ -19,5 +19,5 @@ Due to the nature of this tool, this tool requires root access. It will call `su
 - `airportd`
   This workaround suspends the `airportd` program to disable Wi-Fi roaming and scanning. When this workaround is active, connecting to a different Wi-Fi will not work. Wi-Fi list on the UI will also freeze. Should the current Wi-Fi connection becomes out of range and disconnected, no further reconnection attempt will be made until this workaround is disabled.
 
-- `awdl`
-  This workarounds suspends AirPlay (the `AirPlayXPCHelper` process) and disables the `awdl0` interface to avoid ping spikes for a much more stable internet. When this workaround is active, AirPlay will not work. Additionally, automatic audio sink/source switching when connecting and/or disconnecting Bluetooth audio will not work until this workaround is disabled (already connected Bluetooth audio will work just fine).
+- `airplay`
+  This workarounds suspends AirPlay (the `AirPlayXPCHelper` process) and disables the `awdl0` interface to avoid ping spikes for a much more stable internet. When this workaround is active, AirPlay will not work, and the chances of `awdl0` being restarted is reduced. Additionally, automatic audio sink/source switching when connecting and/or disconnecting Bluetooth audio will not work until this workaround is disabled (already connected Bluetooth audio will work just fine).

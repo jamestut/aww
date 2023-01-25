@@ -98,5 +98,5 @@ class _ProcFinderCached:
 
 avail = {
 	"airportd": AirportWorkaround,
-	"awdl": AwdlWorkaround
+	"airplay": AwdlWorkaround
 }
