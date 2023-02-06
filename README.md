@@ -16,7 +16,7 @@ Due to the nature of this tool, this tool requires root access. It will call `su
 
 ## Available Workarounds
 
-- `airportd`
+- `airportd` (default)
   This workaround suspends the `airportd` program to disable Wi-Fi roaming and scanning. When this workaround is active, connecting to a different Wi-Fi will not work. Wi-Fi list on the UI will also freeze. Should the current Wi-Fi connection becomes out of range and disconnected, no further reconnection attempt will be made until this workaround is disabled.
 
 - `airplay`

@@ -40,7 +40,13 @@ def turn_off(arg):
 	_apply_workaround(arg, False)
 
 def _apply_workaround(arg, turnon):
-	wks = parse_workaround_arg(arg, default_all=True)
+	if turnon:
+		if arg.workaround:
+			wks = parse_workaround_arg(arg, default_all=False)
+		else:
+			wks = ['airportd']
+	else:
+		wks = parse_workaround_arg(arg, default_all=True)
 	if not wks:
 		print("Please select workaround to apply!")
 		return
